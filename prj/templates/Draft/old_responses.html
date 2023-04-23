@@ -1,0 +1,94 @@
+
+{% block title %}
+responses.html
+<H2><p align="center"> Responses </p> </H2>
+{% endblock title %}
+
+{% block content %}
+
+<style>
+body {background-color: #CCFFCC ;}
+</style>
+
+<h4>Login realized: {{request.user.username}}</h4>
+
+    <p align="right"><button> <a href="/"> Main page </a></button> </p>
+<br><br><br><br>
+  <table>
+       <tr>
+                <td width=300px>
+                    <strong><p> Article title  </p></strong>
+                 <br><br>
+                </td>
+
+                <td  width=200px >
+                    <strong><p > Article author </p></strong>
+                    <br><br>
+                </td>
+
+                 <td width=600px >
+                    <strong><p >   Article text   </p></strong>
+                    <br><br>
+                </td>
+
+                 <td width=300px >
+                    <strong><p >  Who response? </p></strong>
+                    <br><br>
+                </td>
+
+                <td  width=900px >
+                    <strong><p > Response text </p></strong>
+                    <br><br>
+                </td>
+
+                <td width=100px>
+                    <strong><p > Action / Status </p></strong>
+                    <br><br>
+                </td>
+
+            </tr>
+            <br>
+
+{% for response in responses %}
+
+  <tr>
+      <td width=200px >
+        <p style="color: rgb(188, 11,  88)">  {{response.article.title}}</p>
+
+      </td>
+
+      <td width=200px >
+          {{response.article.author}}
+
+      </td>
+
+      <td width=400px >
+          {{response.article.text}}
+          &nbsp &nbsp
+      </td>
+      <td>
+          {{response.author}}
+      </td>
+      <td>
+          {{response.text}}
+
+      </td>
+      <td width=300px >
+          {% if response.status is False %}
+
+          <a href="{% url 'response_accept' response.id %}"> Accept </a>
+            &nbsp &nbsp
+          <a href="{% url 'response_delete' response.id %}"> Delete </a>
+
+          {% else %}
+         Response was accepted
+          {% endif %}
+          <br><br><br><br>
+      </td>
+
+  </tr>
+
+  {% endfor %}
+
+  </table>
+{% endblock content %}

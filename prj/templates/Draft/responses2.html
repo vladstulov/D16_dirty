@@ -1,0 +1,101 @@
+
+{% block content %}
+цццццццццццццццццц
+
+
+        <table>
+            <tr>
+                <td>
+                    <strong><p> Title  </p></strong>
+                 <br><br>
+                </td>
+
+                 <td width=100px >
+                    <strong><p >   Author   </p></strong>
+                    <br><br>
+                </td>
+
+                 <td width=300px >
+                    <strong><p >  Date created </p></strong>
+                    <br><br>
+                </td>
+
+                <td  width=900px >
+                    <strong><p > Text </p></strong>
+                    <br><br>
+                </td>
+                <td width=100px>
+                    <strong><p > Category </p></strong>
+                    <br><br>
+                </td>
+
+            </tr>
+            <br>
+
+        {% for note in article %}
+
+            <tr>
+
+
+                <td>
+                    {{ note.title }}
+                    <br>
+                </td>
+
+                <td>
+                    {{ note.author }}
+                    <br>
+                </td>
+
+                <td>
+                    {{ note.dateCreation }}
+                    <br>
+                </td>
+
+                <td  width=800px>
+                    {{ note.text }}
+                    <br>
+                </td>
+
+                <td>
+                    {{ note.category }}
+                 <br>
+                </td>
+
+            </tr>
+        {% endfor %}
+        </table>
+
+
+ццццццццццццццц
+
+  <table>
+
+
+{% for response in responses %}
+  <tr>
+      <td>
+          {{response.article.title}}
+      </td>
+      <td>
+          {{response.article.text}}
+      </td>
+      <td>
+          {{response.author}}
+      </td>
+      <td>
+          {{response.text}}
+      </td>
+      <td>
+          {% if response.status is False %}
+
+          <a href="{% url 'response_accept' response.id %}"> Accept </a>
+          <a href="{% url 'response_delete' response.id %}"> Delete </a>
+
+          {% else %}
+         Response was accepted
+          {% endif %}
+      </td>
+  </tr>
+  {% endfor %}
+{% endblock content %}

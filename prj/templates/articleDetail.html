@@ -1,0 +1,51 @@
+article_detail.html
+<BR>
+{% block title %}
+ <h4> <p align="center"> View article detail </p> </h4>
+{% endblock title %}
+<style>
+body {background-color: #66FFFF ;}
+</style>
+
+    <p align="right"><button> <a href="/"> Main page </a></button> </p>
+
+{% block content %}
+    <br><br>
+    <h2>{{ article.title }}</h2><br>
+    <span>{{ article.text }}<br></span>
+
+    <hr>
+<span><b>Author:</b> {{ article.author }}</span>
+    <br><br>
+    <span> <b>Category:</b> {{ article.get_category_display }}</span>
+    <br><br>
+    <span> <b>Date Creation: </b>{{ article.dateCreation|date:'d-M-Y f' }}</span>
+
+    <br><br>
+
+    <a class="btn btn-secondary" href="/" role="button">Close</a>
+
+
+    <a class="btn btn-secondary" href="/article/{{ article.id }}/edit" role="button">Edit</a>
+
+
+    <a class="btn btn-secondary" href="/article/{{ article.id }}/delete" role="button">Delete</a>
+
+    {% if user.is_authenticated %}
+    <br><br>
+        {% if respond == "Already_responded" %}
+            <a style="color:red">You have already responsed this article</a><br>
+            <a href="{% url 'responses' %}">View my responses</a>
+        {% elif respond == "My_article" %}
+            <a style="color:red">You can't respond on the self article</a><br>
+        {% else %}
+
+<p align="center" style="background: grey" ><button>  <a   href="/respond/{{ article.id }}" > <h3> R e s p o n d ! </h3> </a>   </button></p>
+        {% endif %}
+    {% endif %}
+    <br><br>
+{% endblock content %}
+
+
+
+<a hidden class="btn btn-secondary" href="/respond/{{ article.id }}" role="button">Respond</a>

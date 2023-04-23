@@ -1,0 +1,29 @@
+articleDel.html
+{% block title %}<h2> <p align="center">Delete article </p></h2>{% endblock title %}
+
+{% block content %}
+
+<style>
+body {background-color: #CC99FF;}
+</style>
+
+    <br>
+
+    <h4>{{ article.title }}</h4>
+    <span>{{ article.text }}<br></span>
+
+    <hr>
+
+<b>Date creation:</b> {{ article.dateCreation|date:'d-M-Y f' }}
+<BR>
+<b>Author:</b>   {{ article.author }}
+<br>
+<b>Category:</b>  {{ article.get_category_display }}
+    <br><br>
+
+    <h4>Submit delete:</h4>
+    <form method="POST">
+    {% csrf_token %}
+    <input type="submit" class="btn btn-secondary" style="background: pink" value="Submit"></form>
+    <input type=button value="Back" class="btn btn-secondary" style="background: green" onClick="javascript:history.go(-1);">
+{% endblock content %}

@@ -1,0 +1,13 @@
+Respond.html
+
+{% block title %}Respond{% endblock title %}
+{% block content %}
+    <br>
+    <h3>Response text:</h3><br>
+	<form method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+        {{ form }}
+		<input class="btn btn-secondary" type="submit" value="Save">
+	</form><br>
+    <input type=button value="Back" class="btn btn-secondary" onClick="javascript:history.go(-1);">
+{% endblock content %}

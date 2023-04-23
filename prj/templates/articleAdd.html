@@ -1,0 +1,23 @@
+articleAdd.html
+
+{% block title %}<h2> <p align="center">Add article on the portal </p></h2> {% endblock title %}
+
+{% block content %}
+
+<style>
+body {background-color: #6666FF ;}
+</style>
+<h4>Login realized: {{request.user.username}}</h4>
+
+    <p align="right"><button> <a href="/"> Main page </a></button> </p>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form }} <!-- Теперь нам нужна только готовая форма и кнопка -->
+    <input type="submit" value="Add article on the portal">
+</form>
+
+{% endblock content %}
+
+<!--
+<button> <a href="logout/">Exit</a> </button>-->

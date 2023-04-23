@@ -1,0 +1,120 @@
+portal.html
+
+{% block title %}   {% endblock title %}
+
+View article
+{% block content %}
+
+
+<style>
+body {background-color: #FFFFCC ;}
+</style>
+
+ <h5>login realized:  <i>{{request.user.username}}</i></h5>
+<button> <a href="logout/">LogOut</a> </button>
+
+<BR><BR>
+
+
+    {% csrf_token %} <!-- Не забываем csrf_token для POST запросов -->
+
+    <h1><p align="center" >Article in the portal</p></h1>
+
+    <hr>
+    {% if article %} <!-- Если есть заметки, то выводим таблицу с ними -->
+       Quantity of notes on the portal:
+        <!-- {{ news|length }} -->
+        {{articleListLength|length }}
+
+
+    {% else %}
+        <h2>Not articles on the portal now!</h2>
+    {% endif %}
+
+
+
+<p align="right"><button> <a href="{% url 'addArticle' %}"> Add article </a> </button></p>
+
+<p align="right"><button> <a href="responses">Responses</a> </button></p>
+
+        <table>
+            <tr>
+                <td>
+                    <strong><p> Title  </p></strong>
+                 <br><br>
+                </td>
+
+                 <td width=100px >
+                    <strong><p >   Author   </p></strong>
+                    <br><br>
+                </td>
+
+                 <td width=300px >
+                    <strong><p >  Date created </p></strong>
+                    <br><br>
+                </td>
+
+                <td  width=900px >
+                    <strong><p > Text </p></strong>
+                    <br><br>
+                </td>
+                <td width=100px>
+                    <strong><p > Category </p></strong>
+                    <br><br>
+                </td>
+                <td>
+                    <strong><p > Upload <p></strong>
+                    <br><br>
+                </td>
+            </tr>
+            <br>
+
+        {% for note in article %}
+
+            <tr>
+
+
+                <td width=200px >
+                    <a href="/article/{{ note.id }}" ><b>{{ note.title }}</b></a><br>
+                    <br>
+                <td>
+                    {{ note.author }}
+                    <br>
+                </td>
+
+                <td>
+                    {{ note.dateCreation }}
+                    <br>
+                </td>
+
+                <td  width=800px>
+                    {{ note.text }}
+                    <br>
+                </td>
+
+                <td>
+                    {{ note.get_category_display }}
+                 <br>
+                </td>
+                <td width=100px>
+                {% if note.upload %}
+                    <div>
+                        <img src="{{ note.upload.url }}" width="160" height=auto alt="">
+                    </div>
+                {% endif %}
+                    <br>
+                    <br>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+
+<!-- Добавляем кнопку Стать автором. При нажатии выполняется метод upgrade_me лежащий sign/view -->
+ {% if is_not_authors %}
+<p align="right"><button>  <a href="sign/upgrade/">  Become an author!</a> </button></p>
+
+{% endif %}
+
+{% endblock content %}
+</body>
+<p hidden align="right"><button> <a  href="add">Add article</a> </button></p>

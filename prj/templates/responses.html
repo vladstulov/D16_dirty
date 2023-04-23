@@ -1,0 +1,100 @@
+Responses.html
+{% block title %}  <h2> <p align="center"> Responses </p>  </h2> {% endblock title %}
+
+    <p align="right"><button> <a href="/"> Main page </a></button> </p>
+
+<style>
+body {background-color: #CCFFCC ;}
+</style>
+
+{% block content %}
+    <br>
+    <h3>Responses filter on my article:</h3><br>
+
+
+	<form method="POST">
+		{% csrf_token %}
+        {{ form }}
+		<input class="btn btn-secondary" type="submit" value="Показать">
+	</form><br>
+
+
+    {% if title %}
+ <!-- Блок для варианта с примененным фильтром или через ссылку из письма -->
+        <h3>Responses on my article</h3>
+        <a href="/article/{{ response_article_id }}" style="font-size: 20px;"><b>{{ title }}:</b></a><br>
+        {% if filter_responses %}
+
+            {% for response in filter_responses %}
+                <a><b>Respons: </b></a>{{ response.text }}<br>
+                <span style="font-size: 12px;"><b>Response author: {{ response.author.username }} |
+                    Response date creation: {{ response.dateCreation|date:'d.M.Y' }} г.</b></span><br>
+                {% if response.status == False %}
+                    <a href="/response/accept/{{ response.id }}" style="font-size: 12px; color:green"><b>Accept response</b></a>
+                    <a>&nbsp;&nbsp;&nbsp;</a>
+                    <a href="/response/delete/{{ response.id }}" style="font-size: 12px; color:red"><b>Delete response</b></a>
+                {% else %}
+                    <a style="font-size: 14px; color:green"><b>Response already was accept</b></a>
+                {% endif %}
+                <br><br>
+            {% endfor %}
+        {% else %}
+            <br>
+            <h5>Not responses</h5>
+        {% endif %}
+
+    {% else %}
+
+        <h3>Response on ALL my article:</h3>
+        {% if filter_responses %}
+            {% for response in filter_responses %}
+                <a><b>Article:</b></a>
+                <a href="/article/{{ response.article_id }}" style="font-size: 20px;"><b>{{ response.article.title }}</b></a><br>
+                <span style="font-size: 12px;"><b>Date creation article: {{ response.article.dateCreation|date:'d.M.Y' }} г.</b>
+                </span><br>
+                <a><b>Response: </b></a>{{ response.text }}<br>
+                <span style="font-size: 12px;"><b>Author response: {{ response.author.username }} |
+                    Date creation response: {{ response.dateCreation|date:'d.M.Y' }} г.</b></span><br>
+                {% if response.status == False %}
+                    <a href="/response/accept/{{ response.id }}" style="font-size: 12px; color:green"><b>accept</b></a>
+                    <a>&nbsp;&nbsp;&nbsp;</a>
+                    <a href="/response/delete/{{ response.id }}" style="font-size: 12px; color:red"><b>delete</b></a>
+                {% else %}
+                    <a style="font-size: 14px; color:green"><b>response was accept</b></a>
+                {% endif %}
+                <br><br>
+            {% endfor %}
+        {% else %}
+            <h5>Not responses</h5>
+        {% endif %}
+
+    {% endif %}
+    <br><br>
+
+
+    <h3>My responses on aricle:</h3>
+    {% if myresponses %}
+        {% for response in myresponses %}
+            <a><b>Article:</b></a>
+            <a href="/article/{{ response.article_id }}" style="font-size: 20px;"><b>{{ response.article.title }}</b></a><br>
+            <span style="font-size: 12px;"><b>Author article:  {{ response.article.author.username }} |
+                Date creation article: {{ response.article.dateCreation|date:'d.M.Y' }} г.</b></span><br>
+            <a><b>My response:</b></a>
+            {{ response.text }}<br>
+            <span style="font-size: 12px;"><b>Date creation response: {{ response.dateCreation|date:'d.M.Y' }} г.</b></span><br>
+            {% if response.status == True %}
+                <a style="font-size: 14px; color:green"><b>The author of the article accepted the response!</b></a>
+            {% else %}
+                <a style="font-size: 14px; color:red"><b>The author of the article has not yet accepted the response!</b></a>
+            {% endif %}
+        <br><br>
+        {% endfor %}
+    {% else %}
+        <h5>Not responses</h5>
+    {% endif %}
+{% endblock content %}
+
+
+
+
+

@@ -1,0 +1,130 @@
+
+{% block title %}
+portal.html
+{% endblock title %}
+
+{% block content %}
+
+
+
+
+<h3> login realized <i>{{request.user.username}}</i></h3>
+<button> 12345 <a href="sign/logout/"></a> </button>
+
+<BR><BR>
+
+
+
+
+    {% csrf_token %} <!-- Не забываем csrf_token для POST запросов -->
+
+
+    <h1><p align="center" >Article in the portal</p></h1>
+
+    <hr>
+    {% if article %} <!-- Если есть заметки, то выводим таблицу с ними -->
+       Quantity of notes on the portal:
+        <!-- {{ news|length }} -->
+        {{articleListLength|length }}
+
+
+    {% else %}
+        <h2>Not notes on the portal now!</h2>
+    {% endif %}
+
+
+
+
+<!-- Перед таблицей добавим форму для поиска -->
+
+<p align="left"><button> <a href="search"> Search </a> </button></p>
+
+<p align="right"><button> <a href="add"> Add notes on the portal  </a> </button></p>
+
+        <table>
+            <tr>
+                <td>
+                    <strong><p align="right" >Title </p></strong>
+                 <br><br>
+                </td>
+
+                <td>
+<!-- добавляем пустой столбец, чтобы аккуратно отображалось на странице -->
+                    <br><br>
+                </td>
+
+
+
+                <td>
+                    <strong><p align="center" >Author </p></strong>
+                    <br><br>
+                </td>
+                <td>
+                    <strong><p align="center" > Text </p></strong>
+                    <br><br>
+                </td>
+                <td width=100px>
+                    <strong><p align="left" > Category </p></strong>
+                    <br><br>
+                </td>
+                <td>
+                    <strong><p align="center" >Upload <p></strong>
+                    <br><br>
+                </td>
+            </tr>
+            <br>
+
+        {% for note in article %}
+
+            <tr>
+
+                <td> <
+                    &emsp; <a href="{% url 'note' note.id %}">{{ note.title }}</a>  &emsp; &emsp;
+                    <td>
+                    <a  href="{% url 'newsEdit' note.id %}"></a>
+                    <a href="{% url 'newsDelete' note.id %}"> </a>
+                    </td>
+                    <br>
+
+                </td>
+                    
+                <td>
+                    {{ note.title }}
+                    <br>
+                </td>
+
+                <td width=40%>
+                    {{ note.author }} <!-- дописываем специальный фильтр, чтобы ограничить количество
+                    символов до 77. Все остальные символы превратятся в многоточие. -->
+                    <br>
+                </td>
+                <td width=100px>
+                    {{ note.text }}
+                    <br>
+                </td>
+
+                <td>
+                    {{ note.category }}
+                    <!--<a href="{% url 'category_list' note.category.id %}">{{ note.category }}</a>-->
+
+                    <br>
+                    <br>
+                </td>
+
+                 <td>
+                    {{ note.upload }}
+                    <br>
+                </td>
+
+            </tr>
+        {% endfor %}
+        </table>
+
+<!-- Добавляем кнопку Стать автором. При нажатии выполняется метод upgrade_me лежащий sign/view -->
+ {% if is_not_authors %}
+<p align="right"><button>  <a href="sign/upgrade/">  Become an author!</a> </button></p>
+
+{% endif %}
+
+{% endblock content %}
+</body>

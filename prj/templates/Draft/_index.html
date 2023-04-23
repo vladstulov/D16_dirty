@@ -1,0 +1,17 @@
+{% load socialaccount %}
+
+<html>
+<body>
+
+  <h1> My google OAuth prj </h1>
+
+  {% if user.is_authenticated %}
+
+  <p> Wellcome, You are logged in as {{ user.username }}  </p>
+  {% else %}
+  <a href="{% provider_login_url 'google' %}" > Login with Google </a>
+
+  {% endif %}
+
+</body>
+</html>
